@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GATE 2026 Rank Predictor | Professional</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
+</head>
+
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <span class="logo-text">Rank Predictor</span>
+      </div>
+      <div class="nav-links">
+        <span class="version-badge">GATE 2026</span>
+        <!-- Custom Sign In Button replacing broken Google SDK -->
+        <button id="custom-signin-btn" class="nav-btn primary-solid-btn">Sign In</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="app-container">
+
+    <!-- Hero Header - Centered -->
+    <header class="page-header text-center">
+      <h1 class="main-title">Calculate Your GATE Score instantly</h1>
+      <p class="description">Paste your candidate response sheet URL below to get a detailed performance breakdown, rank
+        prediction, and normalized score analysis based on official keys.</p>
+    </header>
+
+    <!-- Centered Main Content Area -->
+    <main class="centered-layout">
+
+      <!-- Calculator Card -->
+      <section class="card calculator-card">
+        <div class="subject-selection">
+          <label class="section-label">1. Select your Paper Code</label>
+          <div class="toggle-group">
+            <button class="toggle-btn active" data-subject="cs">CS (Computer Science)</button>
+            <button class="toggle-btn" data-subject="da">DA (Data Science)</button>
+          </div>
+        </div>
+
+        <div class="url-input-section">
+          <label class="section-label">2. Paste Official Response URL</label>
+          <div class="input-wrapper">
+            <input type="url" id="response-url" class="url-input"
+              placeholder="https://cdn.digialm.com/.../response.html" autocomplete="off">
+          </div>
+          <button class="primary-btn full-width mt-4" id="calculate-btn">
+            <span class="btn-text">Analyze Response Sheet</span>
+            <div class="spinner" style="display: none;"></div>
+          </button>
+        </div>
+      </section>
+
+      <!-- Dynamic Results Panel (Hidden initially) -->
+      <section class="card results-card" id="dynamic-results" style="display: none;">
+        <h2 class="card-title">Analysis Complete <span class="badge-success">Successfully Parsed</span></h2>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-label">Questions Attempted</span>
+            <span class="stat-value text-indigo" id="res-attempted">0</span>
+            <span class="stat-sub">out of 65</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Estimated Marks</span>
+            <span class="stat-value text-emerald" id="res-marks">0.00</span>
+            <span class="stat-sub">out of 100</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">Predicted Rank</span>
+            <span class="stat-value text-slate" id="res-rank">~ 0</span>
+            <span class="stat-sub">General Category</span>
+          </div>
+        </div>
+
+        <button class="secondary-btn full-width mt-4" onclick="location.reload()">Reset Calculator</button>
+      </section>
+
+      <!-- Two Column Info Section below Calculator -->
+      <div class="info-grid mt-5">
+
+        <!-- Instructions Card -->
+        <div class="card info-card">
+          <h3 class="card-title">How to use</h3>
+          <ul class="steps-list">
+            <li><strong>1. Open</strong> the official <a href="https://goaps.iisc.ac.in/login" target="_blank"
+                class="text-link">IISc GOAPS portal ↗</a>.</li>
+            <li><strong>2. Login</strong> and locate your candidate response sheet tab.</li>
+            <li><strong>3. Copy</strong> the complete URL (.html) from your browser's address bar.</li>
+            <li><strong>4. Paste</strong> it securely above to begin analysis.</li>
+          </ul>
+        </div>
+
+        <!-- Global Stats Card -->
+        <div class="card outline-card highlight-card">
+          <h3 class="card-title">Live Global Stats</h3>
+          <div class="mini-stat">
+            <span>Average CS Score</span>
+            <strong>32.50</strong>
+          </div>
+          <div class="mini-stat">
+            <span>Highest Score Found</span>
+            <strong>89.67</strong>
+          </div>
+          <div class="mini-stat">
+            <span>Sheets Processed</span>
+            <strong>12,405</strong>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- FAQ Section Centered -->
+    <section class="faq-section mt-5">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">Is my response sheet URL saved or public?</button>
+          <div class="accordion-body">
+            <p>No, your URL and results are processed securely. We fetch the HTML to calculate your attempted questions
+              purely for score generation, but do not log your roll number or answers to a database.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">How accurate is the actual parsing?</button>
+          <div class="accordion-body">
+            <p>The parser dynamically counts "Chosen Option" elements directly from the official digialm HTML you
+              provide. The estimated marks use a localized multiplier based on the number of attempts found.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p class="copyright">© 2026 GATE Rank Predictor • Developed by <strong>Sadique Ahmed</strong></p>
+
+      <div class="social-links">
+        <a href="https://github.com/Sadiqueahmed" target="_blank" rel="noopener noreferrer" class="social-icon"
+          aria-label="GitHub">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+            </path>
+          </svg>
+        </a>
+        <a href="https://www.linkedin.com/in/sadique-ahmed-b2039524b/" target="_blank" rel="noopener noreferrer"
+          class="social-icon" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+            <rect x="2" y="9" width="4" height="12"></rect>
+            <circle cx="4" cy="4" r="2"></circle>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
