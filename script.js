@@ -160,4 +160,46 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // === CLERK AUTHENTICATION LOGIC ===
+    // This will be initialized in index.html, but we will handle the DOM updates here
+    // based on Clerk's state once loaded.
+
+    window.addEventListener('load', async function () {
+        try {
+            // Wait for Clerk to load
+            await window.Clerk.load();
+
+            const authContainer = document.getElementById('auth-container');
+
+            if (window.Clerk.user) {
+                // Remove custom sign-in button if it exists
+                authContainer.innerHTML = '';
+
+                // Mount Clerk's User Button (Profile Dropdown)
+                const userButtonDiv = document.createElement('div');
+                authContainer.appendChild(userButtonDiv);
+
+                window.Clerk.mountUserButton(userButtonDiv, {
+                    appearance: {
+                        elements: {
+                            userButtonAvatarBox: 'w-9 h-9 border-2 border-[var(--border-color)]'
+                        }
+                    }
+                });
+            } else {
+                // User is not logged in, handle sign in click
+                const signinBtn = document.getElementById('custom-signin-btn');
+                if (signinBtn) {
+                    signinBtn.addEventListener('click', () => {
+                        window.Clerk.openSignIn();
+                    });
+                }
+            }
+
+        } catch (err) {
+            console.error('Error loading Clerk: ', err);
+            // Fallback UI or silent fail.
+        }
+    });
+
 });
